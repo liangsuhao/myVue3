@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../packages/reactivity/dist/reactivity.global.js"></script>
+    <script>
+        console.log(vueReactivity);
+        let {reactive, shallowReactive} = vueReactivity;
+        let state = reactive({name: '哈哈哈', value: {name: 999}}) 
+        console.log(state);
+        let bb = shallowReactive({name: '啦啦啦', value: {name: 999}})
+        console.log(bb);
+    </script>
+</body>
+</html>

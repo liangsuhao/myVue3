@@ -1,30 +1,32 @@
 import {isObject} from "@vue/shared"
 
-const reactiveHandlers = {};
-const shallowReactiveHandlers = {};
-const readonlyHandlers = {};
-const shallowReadonlyHandlers = {};
+import {
+    reactiveHandlers,
+    shallowReactiveHandlers,
+    readonlyHandlers,
+    shallowReadonlyHandlers
+} from "./baseHandlers"
 
-export function reactive(target) {
+export function reactive(target: any) {
     return createReactObj(target, false, reactiveHandlers)  // 高阶函数
 }
 
-export function shallowReactive(target) {
+export function shallowReactive(target: any) {
     return createReactObj(target, true, shallowReactiveHandlers)
 }
 
-export function readonly(target) {
+export function readonly(target: any) {
     return createReactObj(target, false, readonlyHandlers)
 }
 
-export function shallowReadonly(target) {
+export function shallowReadonly(target: any) {
     return createReactObj(target, true, shallowReadonlyHandlers)
 }
 
 const weakProxyMap = new WeakMap();
 const weakReadonlyProxyMap = new WeakMap();
 // 实现代理的核心方法
-function createReactObj(target, isReadOnly, baseHandler) {
+function createReactObj(target: any, isReadOnly: any, baseHandler: any) {
     if(!isObject(target)) {
         return target;
     } else {
