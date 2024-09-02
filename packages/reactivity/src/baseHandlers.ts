@@ -1,7 +1,7 @@
-import { hasOwn, isArray, isIntegerKey, isObject } from "@vue/shared";
+import { hasOwn, isArray, isIntegerKey, isObject, hasChange } from "@vue/shared";
 import { reactive, readonly } from "./reactive";
-import { TrackOpType } from './operations';
-import { Track } from './effect';
+import { TrackOpType, TriggerOpType } from './operations';
+import { Track, trigger } from './effect';
 
 function createGetter(isReadOnly=false, isShallow=false) {
     return function get(target, key, receiver) {
@@ -25,15 +25,17 @@ function createGetter(isReadOnly=false, isShallow=false) {
 
 function createSetter(isShallow?: any) {
     return function set(target, key, value, receiver) {
-        const res = Reflect.set(target, key,value, receiver);
         // 1.判断是是数组还是对象 2.判断是新增还是修改
         const oldValue = target[key];
         const hasKey = isArray(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
+        const res = Reflect.set(target, key,value, receiver);
 
         if(!hasKey) { //说明是新增操作
-            
+            trigger(target, TriggerOpType.ADD, key, value);
         } else {
-            // trigger(target);
+            if(hasChange(value, oldValue )) {
+                trigger(target,TriggerOpType.SET, key, value, oldValue);
+            }
         }
         return res;
     }

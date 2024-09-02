@@ -6,18 +6,21 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">3334444</div>
   <script src="../packages/reactivity/dist/reactivity.global.js"></script>
   <script>
-    let {reactive, effect} = vueReactivity;
-    let state = reactive({name: '张三', age: 14, list: [1,2,3,4]})
+    let {ref, effect} = vueReactivity;
+    const name = ref('张三');
+
     effect(()=>{
-      console.log(state)
-      document.getElementById('app').innerHTML = state.name + state.age + '---' + state.list[3];
+      var aa = document.getElementById("app")
+      console.log(name.value)
+      console.log(aa)
+      aa.innerHTML = name.value;
     })
+
     setTimeout(() => {
-      state.name = '李四';
-      state.list.length = 1;
+      name.value = 3333;
     }, 1000);
 
   </script>
