@@ -36,3 +36,21 @@ function createRef(target, isShallow=false) {
   return new RefImpl(target,isShallow);
 }
 
+class ObjectRefImpl {
+  public __v_isRef = true;
+  constructor(public target, public key) {
+
+  }
+
+  get value() {
+    return this.target[this.key];
+  }
+
+  set value(newValue) {
+    this.target[this.key] = newValue;
+  }
+}
+
+export function toRef(target, key) {
+  return new ObjectRefImpl(target, key)
+}
