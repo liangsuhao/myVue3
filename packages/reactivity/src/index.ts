@@ -10,5 +10,7 @@ export {
 } from './effect'
 
 export {
-  ref
+  ref,
+  toRef,
+  toRefs
 } from './ref'
