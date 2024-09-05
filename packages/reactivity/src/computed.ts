@@ -15,7 +15,12 @@ class ComputedRefImpl {
     public effect;
     constructor(getter, setter) {
         this.effect = effect(getter, {
-            lazy: true
+            lazy: true,
+            sch: () => {
+                if(!this._dirty) {
+                    this._dirty = true;
+                }
+            }
         })
     }
 

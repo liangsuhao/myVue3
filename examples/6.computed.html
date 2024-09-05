@@ -10,11 +10,11 @@
   <script src="../packages/reactivity/dist/reactivity.global.js"></script>
   <script>
     let {reactive ,ref, effect, toRef, toRefs, computed} = vueReactivity;
-    const obj = {age: 123, name: '张三'};
+    const obj = ref(10);
 
     const com = computed(()=>{
         console.log("执行了");
-        return obj.age + obj.name;
+        return obj.value + 10;
     })
     console.log(com.value);
     console.log(com.value);
@@ -24,9 +24,10 @@
     //   aa.innerHTML = newV.name.value + ':' + newV.age.value;
     // })
 
-    // setTimeout(() => {
-    //   newV.age.value = 3333;
-    // }, 1000);
+    setTimeout(() => {
+      obj.value = 100;
+      console.log(com.value)
+    }, 1000);
 
     // setTimeout(() => {
     //   newV.name.value = '李四';

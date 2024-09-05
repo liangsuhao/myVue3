@@ -30,7 +30,7 @@ function createReactEffect(fn, options) {
     effect.id = uid++; //effect的唯一标识
     effect._isEffect = true; //标识effect是否是响应式的
     effect.raw = fn; //保存用户的方法
-    effect.option = options; //保存用户的属性
+    effect.options = options; //保存用户的属性
 
     return effect;
 }
@@ -80,7 +80,6 @@ export function trigger(target, type, key, newValue?, oldValue?) {
             }
         })
     } else {
-        console.log("lsh",depMap, target, key)
         if(key!==undefined) {
             add(depMap.get(key));
         }
@@ -95,5 +94,11 @@ export function trigger(target, type, key, newValue?, oldValue?) {
     }
 
     // 执行
-    effectSet.forEach((effect: any)=>effect())
+    effectSet.forEach((effect: any)=>{
+        if(effect.options.sch) {
+            effect.options.sch();
+        } else {
+            effect();
+        }
+    })
 }
