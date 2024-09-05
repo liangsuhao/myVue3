@@ -19,7 +19,7 @@ function createReactEffect(fn, options) {
             try {
                 effectStack.push(effect);
                 activeEffect = effect;
-                fn();
+                return fn();
             } finally {
                 effectStack.pop();
                 activeEffect = effectStack[effectStack.length - 1];

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">3334444</div>
+  <script src="../packages/reactivity/dist/reactivity.global.js"></script>
+  <script>
+    let {reactive ,ref, effect, toRef, toRefs, computed} = vueReactivity;
+    const obj = {age: 123, name: '张三'};
+
+    const com = computed(()=>{
+        console.log("执行了");
+        return obj.age + obj.name;
+    })
+    console.log(com.value);
+    console.log(com.value);
+
+    // effect(()=>{
+    //   var aa = document.getElementById("app")
+    //   aa.innerHTML = newV.name.value + ':' + newV.age.value;
+    // })
+
+    // setTimeout(() => {
+    //   newV.age.value = 3333;
+    // }, 1000);
+
+    // setTimeout(() => {
+    //   newV.name.value = '李四';
+    // }, 2000);
+
+  </script>
+</body>
+</html>
