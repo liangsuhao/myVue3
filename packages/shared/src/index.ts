@@ -22,3 +22,5 @@ export const hasOwn = (
 ): key is keyof typeof val => hasOwnProperty.call(val, key)
 
 export const hasChange = (value, oldValue) => value !== oldValue;
+
+export * from './shapeFlags';

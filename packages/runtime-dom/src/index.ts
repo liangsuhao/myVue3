@@ -1,5 +1,6 @@
 import { patchProps } from './patchprop';
 import { nodeOps } from './nodeOps';
+import { createRender } from '@vue/runtime-core';
 
 export const renderOptionDom = {patchProps, ...nodeOps};
 
@@ -13,17 +14,4 @@ export const createApp = (rootComponent, rootProps) => {
         mount(container);
     }
     return app;
-}
-
-function createRender(renderOptionDom) {
-    return {
-        createApp:(rootComponent, rootProps) => {
-            let app = {
-                mount: (container) => {
-                    console.log(container, rootComponent, rootProps, renderOptionDom);
-                }
-            }
-            return app;
-        }
-    }
 }

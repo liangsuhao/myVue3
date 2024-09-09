@@ -1,0 +1,17 @@
+export const enum shapeFlags {
+    ELEMENT = 1,   // 00000001
+    FUNCTIONAL_COMPONENT = 1 << 1,  // 00000010
+    STATEFUL_COMPONENT = 1 << 2,  // 00000100
+    TEXT_CHILDREN = 1 << 3,     // 00001000
+    ARRAY_CHILDREN = 1 << 4,    // 00010000
+    SLOT_CHILDREN = 1 << 5,  //  00100000
+    TELEPORT = 1 << 6,   //  01000000
+    SUSPENCE = 1 << 7, // 10000000
+    COMPONENT_SHOULD_KEEP_ALIVE = 1 << 8, 
+    COMPONENT_KEPT_ALIVE = 1 << 9,
+
+    COMPONENT = shapeFlags.STATEFUL_COMPONENT | shapeFlags.FUNCTIONAL_COMPONENT
+}
+
+// 判断是不是组件
+// 
