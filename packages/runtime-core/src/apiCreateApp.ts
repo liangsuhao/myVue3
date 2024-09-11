@@ -9,7 +9,6 @@ export function ApiCreateApp(render) {
 
             mount(container) {
                 let vNode = createVode(rootComponent, rootProps);
-                console.log(vNode,'lsh');
 
                 render(vNode, container);
             }

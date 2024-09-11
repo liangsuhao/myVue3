@@ -6,7 +6,7 @@ import { isArray, isObject, isString, shapeFlags } from "@vue/shared";
 // 创建vnode，区分
 export const createVode = (type, props, children= null) => {
     //vnode {}
-    let shapeFlag = isString(type) ? shapeFlags.ELEMENT : isObject(type) ? shapeFlags.COMPONENT : 0;
+    let shapeFlag = isString(type) ? shapeFlags.ELEMENT : isObject(type) ? shapeFlags.STATEFUL_COMPONENT : 0;
     const vnode = {
         _v_isVnode : true,
         type,
@@ -14,7 +14,8 @@ export const createVode = (type, props, children= null) => {
         children,
         key: props && props.key, //diff会用到
         el: null, //与真实dom一一对应
-        shapeFlag
+        shapeFlag,
+        component: {},
     }
     // 儿子也需要标识
     normalizeChildren(vnode, children);
@@ -32,4 +33,8 @@ function normalizeChildren(vnode, children) {
         type = shapeFlags.TEXT_CHILDREN;
     }
     vnode.shapeFlag = vnode.shapeFlag | type;
+}
+
+export function isVnode(vnode) {
+    return vnode._v_isVnode;
 }

@@ -11,8 +11,12 @@
   <script>
     let { createApp } = vueRuntimeDom;
     let App = {
-      render() {
-        console.log(100)
+      setup(props, context) {
+        console.log('setup')
+      },
+      render(proxy) {
+        // console.log(this, proxy, 100)
+        h('div', {}, hello)
       }
     }
     createApp(App,{name:"张三",age:10}).mount("#app");
