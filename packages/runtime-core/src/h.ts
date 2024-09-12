@@ -14,6 +14,14 @@ export function h(type, propsOrChildren, children) { //变成vnode
         } else {
             return createVode(type, null, propsOrChildren);
         }
+    } else {
+        // h('div', {}, 1, 2, 3, 4)
+        if(len > 3) {
+            children = Array.prototype.slice.call(arguments, 2);
+        } else if(len === 3 && isVnode(children)) {
+            children = [children];
+        }
+        return createVode(type, propsOrChildren, children);
     }
 
 }
