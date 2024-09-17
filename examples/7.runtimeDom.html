@@ -9,14 +9,26 @@
   <div id="app"></div>
   <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
   <script>
-    let { createApp, h } = vueRuntimeDom;
+    let { createApp, h, reactive } = vueRuntimeDom;
     let App = {
       setup(props, context) {
-        console.log('setup')
+        let state = reactive({age: 10, name: "张三", flag: false})
+
+        const fn = () => {
+          state.flag = !state.flag;
+        }
+        return {
+          state,
+          fn
+        }
       },
       render(proxy) {
         // console.log(this, proxy, 100)
-        return h('div', {style: {color: 'red'}}, 'hello');
+        if(!proxy.state.flag) {
+          return h('div', {style: {color: 'red'}, onClick: proxy.fn}, proxy.state.name);
+        } else {
+          return h('h', {style: {color: 'red'}, onClick: proxy.fn}, 'aaa');
+        }
       }
     }
     createApp(App,{name:"张三",age:10}).mount("#app");

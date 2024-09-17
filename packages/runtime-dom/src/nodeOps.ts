@@ -7,7 +7,7 @@ export const nodeOps = {
     }
   },
   insert: (child,parent,ancher=null) => {
-    parent.inserBefore(child);
+    parent.insertBefore(child, ancher);
   },
   querySelector: select => document.querySelector(select),
   setElementText: (el, text) => el.textContent = text,

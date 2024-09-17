@@ -12,7 +12,7 @@ export function patchProps(el, key, prevValue, nextValue) {
             patchStyle(el, prevValue, nextValue);
             break;
         default:
-            if(/^on[a-z]/.test(key)) {
+            if(/^on[a-z,A-Z]/.test(key)) {
                 patchEvent(el, key, nextValue);
             } else {
                 patchAttr(el, key, nextValue);

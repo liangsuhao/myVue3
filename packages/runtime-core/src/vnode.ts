@@ -38,3 +38,11 @@ function normalizeChildren(vnode, children) {
 export function isVnode(vnode) {
     return vnode._v_isVnode;
 }
+
+export const TEXT = Symbol('text');
+export function CVnode(element) {
+    if(isObject(element)) {
+        return element;
+    }
+    return createVode(TEXT, null, String(element));
+}
