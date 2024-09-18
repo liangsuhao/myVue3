@@ -183,9 +183,40 @@ export function createRender(renderOptionDom) {
             while(i <= e2) {
                 patch(null, c2[i++], el, ancher)
             }
-        } else if (i <= e1) { //说明节点变少
+        } else if (i > e2) { //说明节点变少
             while(i <= e1) {
                 unmount(c1[i++]);
+            }
+        } else {
+            //说明是乱序，新建map进行存储。随后在map中找，能找到的话就复用否则添加
+            const keyIndexMap = new Map();
+            let s1 = i, s2 = i;
+            const patchNum = e2 - s2 + 1;
+            const indexToPatchMap = new Array(patchNum).fill(0);
+            for(let j = s2; j <= e2; j++) {
+                const childNode = c2[j];
+                keyIndexMap.set(childNode.key, j);
+            }
+            for(let j = s1; j <= e1; j++) {
+                const childNode = c1[j];
+                const keyIndex = keyIndexMap.get(childNode.key);
+                if(keyIndex === undefined) {
+                    unmount(childNode);
+                } else {
+                    indexToPatchMap[keyIndex - s2] = j + 1;
+                    patch(childNode, c2[keyIndex], el)
+                }
+            }
+
+            for(let j = patchNum -1; j>=0; j--) {
+                let currentIndex = s2 + j;
+                let child = c2[currentIndex];
+                let ancher = currentIndex + 1 < c2.length ? c2[currentIndex + 1].el : null;
+                if(indexToPatchMap[j] === 0) {
+                    patch(null, child, el,ancher);
+                } else {
+                    hostIsert(child.el, el, ancher);
+                }
             }
         }
     }

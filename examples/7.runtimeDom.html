@@ -26,18 +26,25 @@
         // console.log(this, proxy, 100)
         if(!proxy.state.flag) {
           return h('div', {style: {color: 'red'}, onClick: proxy.fn}, [
-            h('p', {key: 'A'},'A'),
-            h('p', {key: 'B'},'B'),
-            h('p', {key: 'C'},'C'),
+          h('p', {key: 'a'},'a'),
+            h('p', {key: 'b'},'b'),
+            h('p', {key: 'c'},'c'),
+            h('p', {key: 'd'},'d'),
+            h('p', {key: 'e'},'e'),
+            h('p', {key: 'q'},'q'),
+            h('p', {key: 'f'},'f'),
+            h('p', {key: 'g'},'g'),
           ]);
         } else {
           return h('div', {style: {color: 'blue'}, onClick: proxy.fn}, [
-            h('p', {key: 'A'},'A'),
-            h('p', {key: 'B'},'B'),
-            h('p', {key: 'C'},'C'),
-            h('p', {key: 'D'},'D'),
-            h('p', {key: 'E'},'E'),
-            h('p', {key: 'F'},'F'),
+            h('p', {key: 'a'},'a'),
+            h('p', {key: 'b'},'b'),
+            h('p', {key: 'e'},'e'),
+            h('p', {key: 'c'},'c'),
+            h('p', {key: 'd'},'d'),
+            h('p', {key: 'h'},'h'),
+            h('p', {key: 'f'},'f'),
+            h('p', {key: 'g'},'g'),
           ]);
         }
       }
