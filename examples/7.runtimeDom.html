@@ -25,9 +25,20 @@
       render(proxy) {
         // console.log(this, proxy, 100)
         if(!proxy.state.flag) {
-          return h('div', {style: {color: 'red'}, onClick: proxy.fn}, proxy.state.name);
+          return h('div', {style: {color: 'red'}, onClick: proxy.fn}, [
+            h('p', {key: 'A'},'A'),
+            h('p', {key: 'B'},'B'),
+            h('p', {key: 'C'},'C'),
+          ]);
         } else {
-          return h('h', {style: {color: 'red'}, onClick: proxy.fn}, 'aaa');
+          return h('div', {style: {color: 'blue'}, onClick: proxy.fn}, [
+            h('p', {key: 'A'},'A'),
+            h('p', {key: 'B'},'B'),
+            h('p', {key: 'C'},'C'),
+            h('p', {key: 'D'},'D'),
+            h('p', {key: 'E'},'E'),
+            h('p', {key: 'F'},'F'),
+          ]);
         }
       }
     }
