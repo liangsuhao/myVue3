@@ -144,6 +144,52 @@ export function createRender(renderOptionDom) {
         }
     }
 
+    // 最长递增子序列
+    function getSequence(arr) {
+        let len = arr.length;
+        let start, end, middle;
+        const result = [0];
+        const p = arr.slice();
+        for(let i = 1 ; i < len ; i++) {
+            if(arr[i] !== 0) {
+                const lastIndex = result[result.length - 1];
+                if(arr[i] > arr[lastIndex]) {
+                    p[i] = lastIndex;
+                    result.push(i);
+                    continue;
+                }
+                // 二分查找替换
+                start = 0;
+                end = result.length - 1;
+                while(start < end) {
+                    middle = Math.floor((start + end) / 2);
+    
+                    if(arr[result[middle]] < arr[i]) {
+                        start = middle + 1;
+                    } else {
+                        end = middle;
+                    }
+                }
+                // 找到对应的位置
+                if(arr[i] < arr[result[start]]) {
+                    if(start > 0) {
+                        p[i] = result[start-1];
+                    }
+                    result[start] = i;
+                }
+            }
+        }
+    
+        // 循环获取数据
+        let len1 = result.length;
+        let last = result[len1-1];
+        while(len1--) {
+            result[len1] = last;
+            last = p[last];
+        }
+        return result;
+    }
+
     /**
      * 儿子都是数组的情况
      */
@@ -208,14 +254,20 @@ export function createRender(renderOptionDom) {
                 }
             }
 
-            for(let j = patchNum -1; j>=0; j--) {
+            const increaseArr = getSequence(indexToPatchMap);
+            let k = increaseArr.length - 1;
+            for(let j = patchNum -1; j>=0; j--) { //这里要倒叙进行添加，因为是insertbefor要先处理后一个元素
                 let currentIndex = s2 + j;
                 let child = c2[currentIndex];
                 let ancher = currentIndex + 1 < c2.length ? c2[currentIndex + 1].el : null;
                 if(indexToPatchMap[j] === 0) {
                     patch(null, child, el,ancher);
                 } else {
-                    hostIsert(child.el, el, ancher);
+                    if(j != increaseArr[k]) {
+                        hostIsert(child.el, el, ancher);
+                    } else {
+                        k--;
+                    }
                 }
             }
         }
