@@ -3,6 +3,7 @@ import { ApiCreateApp } from "./apiCreateApp";
 import { createComponentInstance, setupComponent } from "./component";
 import { effect } from "@vue/reactivity";
 import { CVnode, TEXT } from './vnode';
+import { invokeArrayFns } from "./apiLifeCycle";
 
 export function createRender(renderOptionDom) {
     const {
@@ -18,18 +19,32 @@ export function createRender(renderOptionDom) {
         effect(function componentEffect(){
             // 用effect将数据进行收集
             if(!instance.isMounted) {
+                let { M, bm } = instance;
+                if(bm) {
+                    invokeArrayFns(bm);
+                }
                 // 获取到render的返回值
                 let proxy = instance.proxy;
                 let subTree = instance.subTree = instance.render.call(proxy, proxy);
                 // 渲染元素
                 patch(null, subTree, container);
                 instance.isMounted = true;
+                if(M) {
+                    invokeArrayFns(M);
+                }
             } else {
+                let { u, bu } = instance;
+                if(bu) {
+                    invokeArrayFns(bu);
+                }
                 const proxy = instance.proxy;
                 const prevTree = instance.subTree;
                 const newTree = instance.render.call(proxy, proxy);
                 instance.subTree = newTree;
                 patch(prevTree, newTree, container)
+                if(u) {
+                    invokeArrayFns(u);
+                }
             }
         })
     }

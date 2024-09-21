@@ -1,6 +1,13 @@
 import { isFunction, isObject, shapeFlags } from "@vue/shared";
 import { componentPublicInstance } from "./componentPublicInstance";
 
+export const getCurrentInstance = () => {
+    return currentInstance;
+}
+
+export const setCurrentInstance = (target) => {
+    currentInstance = target;
+}
 export const createComponentInstance = (vnode) => {
     // 就是一个对象
     const instance = {
@@ -31,14 +38,17 @@ export const setupComponent = (instance) => {
 
 }
 
+export let currentInstance;
 const setupStateComponent = (instance) => {
     // setup 返回值是我们render函数的参数
     let component = instance.type;
     let { setup } = component;
     
     if(setup) {
+        currentInstance = instance;
         const setupContext = createContext(instance);
         let setupResult = setup(instance.props, setupContext);
+        currentInstance = null;
         //setup返回值是对象或者函数
         handleSetupResult(instance, setupResult);
     } else {
